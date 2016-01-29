@@ -17,6 +17,8 @@
 #define kDropdownMenuIndicatorColor               kRGBColorFromHex(0x02C1CD)
 #define kDropdownMenuTitleColor                   kRGBColorFromHex(0x1D1D26)
 
+#define WS(weakSelf)                              __weak __typeof(&*self) weakSelf = self;
+#define SS(strongSelf)                            __strong __typeof(&*weakSelf) strongSelf = weakSelf;
 typedef struct {
     CGFloat ANIMATION_DURATION;
 }ZLDROPDOWNMENU_MENU_UI_VALUE;

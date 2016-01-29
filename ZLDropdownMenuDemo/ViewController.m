@@ -11,6 +11,7 @@
 #import "ZLDropDownMenuUICalc.h"
 #import "ZLDropDownMenuCollectionViewCell.h"
 #import "ZLDropDownMenu.h"
+#import "NSString+ZLStringSize.h"
 
 @interface ViewController () <ZLDropDownMenuDelegate, ZLDropDownMenuDataSource>
 
@@ -27,12 +28,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _mainTitleArray = @[@"主题市场", @"特色购物", @"优惠促销", @"潮流女装"];
+    _mainTitleArray = @[@"BOOKS", @"MOVIES", @"HOME", @"MUSIC"];
     _subTitleArray = @[
-                       @[@"全部", @"汽车", @"数码", @"家电", @"游戏", @"生活", @"学习", @"房产", @"户外", @"运动", @"娱乐", @"美妆"],
-                       @[@"全部", @"青年", @"中老年", @"批发量贩"],
-                       @[@"全部", @"天天特价", @"试用", @"抢新", @"清仓"],
-                       @[@"全部", @"韩版", @"连衣裙", @"棉衣", @"套装", @"冬季新品", @"毛衣", @"半裙", @"品牌特卖"]
+                       @[@"All", @"Arts", @"Photography", @"Biographies", @"Memoirs", @"Business", @"Calendars", @"Education", @"Comics", @"Computers", @"Transpotation", @"History"],
+                       @[@"All", @"Animation", @"Drama", @"Comedy"],
+                       @[@"All", @"Furniture", @"Bedding", @"Bath", @"Artwork"],
+                       @[@"All", @"Blues", @"Christian", @"Classical", @"Country", @"Jazz", @"Pop", @"Folk", @"Gospel"]
                        ];
     UIView *topView = [[UIView alloc] init];
     topView.backgroundColor = [UIColor cyanColor];

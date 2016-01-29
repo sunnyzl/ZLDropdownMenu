@@ -16,6 +16,7 @@
     CGSize maxSize = CGSizeMake(maxWidth, maxHeight);
     attr[NSFontAttributeName] = font;
     return [self boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attr context:nil].size;
+    
 }
 
 - (CGSize)zl_stringSizeWithFont:(UIFont *)font maxWidth:(CGFloat)maxWidth

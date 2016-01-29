@@ -64,7 +64,6 @@
     CGSize subTitleSize = [_subTitle zl_stringSizeWithFont:
                            
                            [UIFont systemFontOfSize:dropDownMenuTitleButtonUIValue()->SUBTITLELABEL_FONT]];
-    //    _arrowLayer = [CAShapeLayer cre];
     if (_subTitle == nil) {
         [containerView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(weakSelf);
@@ -90,7 +89,8 @@
         
         [_mainTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.centerX.equalTo(containerView);
-            make.size.mas_equalTo(mainTitleSize);
+            make.width.mas_equalTo(mainTitleSize.width + 1);
+            make.height.mas_equalTo(mainTitleSize.height);
         }];
         
         [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
