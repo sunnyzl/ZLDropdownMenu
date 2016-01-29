@@ -3,7 +3,7 @@
 ---
 This version is the original version, I will add more function for it in the future.You can use `ZLDropdownMenu` to set the condition what you want to filter.If you have any advice or problem, please [issue](https://github.com/sunnyzl/ZLDropdownMenu/issues) me.
 
-![demo](https://raw.githubusercontent.com/sunnyzl/ZLDropdownMenu/master/demo.gif)
+![demo1](https://raw.githubusercontent.com/sunnyzl/ZLDropdownMenu/master/demo1.gif)
 
 # Usage 
 
@@ -35,6 +35,10 @@ if you wanna change the UI, plese reset `ZLDropDownMenuUICalc` 、`ZLDropDownMen
 
 ---
 此版本为初版，后续将添加更多功能，使用了Masonry进行布局
+
+#效果图
+
+![demo](https://raw.githubusercontent.com/sunnyzl/ZLDropdownMenu/master/demo.gif)
 
 #使用方法
 
