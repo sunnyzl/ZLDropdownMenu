@@ -1,15 +1,17 @@
 # ZLDropdownMenu 
 
 ---
-This version is the original version, I will add more function for it in the future.You can use `ZLDropdownMenu` to set the condition what you want to filter.If you have any advice or problem, please [issue](https://github.com/sunnyzl/ZLDropdownMenu/issues) me.
+This version is the original version, I will add more function for it in the future. You can use `ZLDropdownMenu` to set the condition what you want to filter. If you have any advice or problem, please [issue](https://github.com/sunnyzl/ZLDropdownMenu/issues) me.
 
 ![demo1](https://raw.githubusercontent.com/sunnyzl/ZLDropdownMenu/master/demo1.gif)
 
 # Usage 
 
----
-```
+---  
+
 First, you should set the datasource and delegate.  
+
+```  
     ZLDropDownMenu *menu = [[ZLDropDownMenu alloc] init];
     [self.view addSubview:menu];
     menu.delegate = self;
