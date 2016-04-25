@@ -289,7 +289,6 @@ static NSInteger clickCount;
     clickCount++;
     if (titleButton.index == self.currentSelectedMenuIndex && self.isShow) {
         [self animationWithTitleButton:titleButton BackgroundView:self.backgroundView collectionView:self.collectionView show:NO complete:^{
-//            self.coverLayerView.hidden = YES;
             self.currentSelectedMenuIndex = titleButton.index;
             self.show = NO;
         }];

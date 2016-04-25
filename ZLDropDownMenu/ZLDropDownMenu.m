@@ -34,6 +34,7 @@ typedef void(^ZLDropDownMenuAnimateCompleteHandler)(void);
 @property (nonatomic, assign) NSInteger currentSelectedMenuIndex;
 @property (nonatomic, assign) NSInteger numOfMenu;
 @property (nonatomic, strong) UIView *backgroundView;
+@property (nonatomic, strong) UIView *coverLayerView;
 @property (nonatomic, assign, getter=isShow) BOOL show;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
@@ -131,6 +132,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
 {
     if (self.selectedButton == button) {
         button.selected = isShow;
+        self.coverLayerView.hidden = NO;
     } else {
         button.selected = YES;
         self.selectedButton.selected = NO;
@@ -204,6 +206,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
             collectionViewHeight = collectionViewHeight > maxHeight ? maxHeight : collectionViewHeight;
             
             if (1 == clickCount) {
+                self.coverLayerView.hidden = NO;
                 [self.superview addSubview:collectionView];
                 [self.collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(weakSelf.mas_bottom);
@@ -217,8 +220,11 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                         make.height.mas_equalTo(collectionViewHeight);
                     }];
                     [collectionView.superview layoutIfNeeded];
+                }completion:^(BOOL finished) {
+                    self.coverLayerView.hidden = YES;
                 }];
-            } else {[UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
+            } else {
+                [UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
                 [collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.height.mas_equalTo(collectionViewHeight);
                 }];
@@ -239,7 +245,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                 [collectionView.superview layoutIfNeeded];
             } completion:^(BOOL finished) {
                 [collectionView removeFromSuperview];
-            
+                self.coverLayerView.hidden = YES;
                 clickCount = 0;
             }];
         }
@@ -247,6 +253,31 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
     if (complete) {
         complete();
     }
+}
+
+
+
+- (CGRect)screenBounds
+{
+    return [self keyWindow].bounds;
+}
+
+- (UIWindow *)keyWindow
+{
+    return [[[UIApplication sharedApplication] windows] lastObject];
+}
+
+#pragma mark -- lazyLoad
+- (UIView *)coverLayerView
+{
+    if (_coverLayerView == nil) {
+        _coverLayerView = [[UIView alloc] init];
+        _coverLayerView.frame = [self screenBounds];
+        _coverLayerView.backgroundColor = [UIColor clearColor];
+        _coverLayerView.hidden = YES;
+        [[self keyWindow] addSubview:_coverLayerView];
+    }
+    return _coverLayerView;
 }
 
 
@@ -269,6 +300,8 @@ static NSInteger clickCount;
         }];
     }
 }
+
+
 
 - (void)backgroundViewDidTap:(UITapGestureRecognizer *)tapGesture
 {
