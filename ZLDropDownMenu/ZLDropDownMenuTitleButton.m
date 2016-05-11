@@ -45,7 +45,7 @@
 
 - (void)viewConfig
 {
-    __weak typeof(self) weakSelf = self;
+    WS(weakSelf);
     UIView *containerView = [[UIView alloc] init];
     containerView.userInteractionEnabled = NO;
     [self addSubview:containerView];
@@ -102,8 +102,8 @@
     _arrowView = [[UIView alloc] init];
     [containerView addSubview:_arrowView];
     [_arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_mainTitleLabel.mas_right).offset(dropDownMenuTitleButtonUIValue()->ARROWVIEW_LEFTMARGIN);
-        make.centerY.equalTo(_mainTitleLabel);
+        make.left.equalTo(weakSelf.mainTitleLabel.mas_right).offset(dropDownMenuTitleButtonUIValue()->ARROWVIEW_LEFTMARGIN);
+        make.centerY.equalTo(weakSelf.mainTitleLabel);
         make.width.mas_equalTo(dropDownMenuTitleButtonUIValue()->ARROWVIEW_WIDTH);
         make.height.mas_equalTo(dropDownMenuTitleButtonUIValue()->ARROWVIEW_HEIGHT);
     }];
@@ -132,17 +132,17 @@
 {
     [super setSelected:selected];
     _bottomLineView.hidden = !selected;
-    
+    WS(weakSelf);
     _mainTitleLabel.textColor = selected ? kDropdownMenuIndicatorColor: kDropdownMenuTitleColor;
     if (selected) {
         [UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
-            _arrowView.transform = CGAffineTransformMakeRotation(M_PI);
+            weakSelf.arrowView.transform = CGAffineTransformMakeRotation(M_PI);
         } completion:^(BOOL finished) {
             
         }];
     } else {
         [UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
-            _arrowView.transform = CGAffineTransformIdentity;
+            weakSelf.arrowView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             
         }];

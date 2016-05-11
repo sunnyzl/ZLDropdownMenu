@@ -29,7 +29,7 @@
 
 - (void)viewConfig
 {
-    __weak typeof(self) weakSelf = self;
+    WS(weakSelf);
     _label = [[UILabel alloc] init];
     _label.layer.cornerRadius = dropDownMenuCollectionViewUIValue()->CELL_LABEL_CORNERRADIUS;
     _label.layer.masksToBounds = YES;

@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    WS(weakSelf);
     _mainTitleArray = @[@"BOOKS", @"MOVIES", @"HOME", @"MUSIC"];
     _subTitleArray = @[
                        @[@"All", @"Arts", @"Photography", @"Biographies", @"Memoirs", @"Business", @"Calendars", @"Education", @"Comics", @"Computers", @"Transpotation", @"History"],
@@ -39,7 +39,7 @@
     topView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:topView];
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.view);
+        make.top.left.right.equalTo(weakSelf.view);
         make.height.mas_equalTo(100.f);
     }];
     ZLDropDownMenu *menu = [[ZLDropDownMenu alloc] init];
@@ -48,7 +48,7 @@
     menu.dataSource = self;
     [menu mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom);
-        make.left.right.equalTo(self.view);
+        make.left.right.equalTo(weakSelf.view);
         make.height.mas_equalTo(50);
     }];
 }

@@ -92,7 +92,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
     NSAssert([_dataSource respondsToSelector:@selector(numberOfColumnsInMenu:)], @"does not respond 'numberOfColumnsInMenu:' method");
     _numOfMenu = [_dataSource numberOfColumnsInMenu:self];
     
-    __weak typeof(self) weakSelf = self;
+    WS(weakSelf);
     CGFloat width = deviceWidth() / _numOfMenu;
     _titleButtons = [NSMutableArray arrayWithCapacity:_numOfMenu];
     ZLDropDownMenuTitleButton *lastTitleButton = nil;
@@ -130,6 +130,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                                show:(BOOL)isShow
                            complete:(ZLDropDownMenuAnimateCompleteHandler)complete
 {
+    WS(weakSelf);
     if (self.selectedButton == button) {
         button.selected = isShow;
         self.coverLayerView.hidden = NO;
@@ -139,7 +140,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
         self.selectedButton = button;
     }
     [self animationWithBackgroundView:backgroundView show:isShow complete:^{
-        [self animationWithCollectionView:collectionView show:isShow complete:nil];
+        [weakSelf animationWithCollectionView:collectionView show:isShow complete:nil];
     }];
     if (complete) {
         complete();
@@ -152,8 +153,9 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                             show:(BOOL)isShow
                            complete:(ZLDropDownMenuAnimateCompleteHandler)complete
 {
+    WS(weakSelf);
     [self animationWithBackgroundView:backgroundView show:isShow complete:^{
-        [self animationWithCollectionView:collectionView show:isShow complete:nil];
+        [weakSelf animationWithCollectionView:collectionView show:isShow complete:nil];
     }];
     if (complete) {
         complete();
@@ -164,7 +166,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                                show:(BOOL)isShow
                            complete:(ZLDropDownMenuAnimateCompleteHandler)complete
 {
-    __weak typeof(self) weakSelf = self;
+    WS(weakSelf);
     if (isShow) {
         if (1 == clickCount) {
             [self.superview addSubview:backgroundView];
@@ -195,7 +197,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                                show:(BOOL)isShow
                            complete:(ZLDropDownMenuAnimateCompleteHandler)complete
 {
-    __weak typeof(self) weakSelf = self;
+    WS(weakSelf);
     if (isShow) {
         CGFloat collectionViewHeight = 0.f;
         if (collectionView) {
@@ -221,7 +223,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                     }];
                     [collectionView.superview layoutIfNeeded];
                 }completion:^(BOOL finished) {
-                    self.coverLayerView.hidden = YES;
+                    weakSelf.coverLayerView.hidden = YES;
                 }];
             } else {
                 [UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
@@ -245,7 +247,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                 [collectionView.superview layoutIfNeeded];
             } completion:^(BOOL finished) {
                 [collectionView removeFromSuperview];
-                self.coverLayerView.hidden = YES;
+                weakSelf.coverLayerView.hidden = YES;
                 clickCount = 0;
             }];
         }
@@ -287,16 +289,17 @@ static NSInteger clickCount;
 - (void)titleButtonDidClick:(ZLDropDownMenuTitleButton *)titleButton
 {
     clickCount++;
+    WS(weakSelf);
     if (titleButton.index == self.currentSelectedMenuIndex && self.isShow) {
         [self animationWithTitleButton:titleButton BackgroundView:self.backgroundView collectionView:self.collectionView show:NO complete:^{
-            self.currentSelectedMenuIndex = titleButton.index;
-            self.show = NO;
+            weakSelf.currentSelectedMenuIndex = titleButton.index;
+            weakSelf.show = NO;
         }];
     } else {
         self.currentSelectedMenuIndex = titleButton.index;
         [self.collectionView reloadData];
         [self animationWithTitleButton:titleButton BackgroundView:self.backgroundView collectionView:self.collectionView show:YES complete:^{
-            self.show = YES;
+            weakSelf.show = YES;
         }];
     }
 }
@@ -305,9 +308,10 @@ static NSInteger clickCount;
 
 - (void)backgroundViewDidTap:(UITapGestureRecognizer *)tapGesture
 {
+    WS(weakSelf);
     ZLDropDownMenuTitleButton *titleButton = self.titleButtons[self.currentSelectedMenuIndex];
     [self animationWithTitleButton:titleButton BackgroundView:self.backgroundView collectionView:self.collectionView show:NO complete:^{
-        self.show = NO;
+        weakSelf.show = NO;
     }];
 }
 
@@ -346,6 +350,7 @@ static NSInteger clickCount;
 
 - (void)configMenuSubTitleWithSelectRow:(NSInteger)row
 {
+    WS(weakSelf);
     ZLDropDownMenuTitleButton *button = _titleButtons[self.currentSelectedMenuIndex];
     NSString *currentSelectedTitle = [self.dataSource menu:self titleForRowAtIndexPath:[ZLIndexPath indexPathWithColumn:self.currentSelectedMenuIndex row:row]];
     button.subTitle = currentSelectedTitle;
@@ -353,7 +358,7 @@ static NSInteger clickCount;
         self.defaultSelectedCell.selected = NO;
     }
     [self animationWithTitleButton:button BackgroundView:self.backgroundView collectionView:self.collectionView show:NO complete:^{
-        self.show = NO;
+        weakSelf.show = NO;
     }];
 }
 
