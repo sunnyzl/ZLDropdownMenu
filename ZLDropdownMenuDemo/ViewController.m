@@ -13,13 +13,11 @@
 #import "ZLDropDownMenu.h"
 #import "NSString+ZLStringSize.h"
 
-@interface ViewController () <ZLDropDownMenuDelegate, ZLDropDownMenuDataSource>
-
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
+@interface ViewController () <ZLDropDownMenuDelegate, ZLDropDownMenuDataSource, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *mainTitleArray;
 @property (nonatomic, strong) NSArray *subTitleArray;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -35,23 +33,46 @@
                        @[@"All", @"Furniture", @"Bedding", @"Bath", @"Artwork"],
                        @[@"All", @"Blues", @"Christian", @"Classical", @"Country", @"Jazz", @"Pop", @"Folk", @"Gospel"]
                        ];
-    UIView *topView = [[UIView alloc] init];
-    topView.backgroundColor = [UIColor cyanColor];
-    [self.view addSubview:topView];
-    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(weakSelf.view);
-        make.height.mas_equalTo(100.f);
-    }];
+    
     ZLDropDownMenu *menu = [[ZLDropDownMenu alloc] init];
-    [self.view addSubview:menu];
+    menu.bounds = CGRectMake(0, 0, deviceWidth(), 50.f);
     menu.delegate = self;
     menu.dataSource = self;
-    [menu mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView.mas_bottom);
-        make.left.right.equalTo(weakSelf.view);
-        make.height.mas_equalTo(50);
-    }];
+    self.tableView.tableHeaderView = menu;
+//    UIView *topView = [[UIView alloc] init];
+//    topView.backgroundColor = [UIColor cyanColor];
+//    [self.view addSubview:topView];
+//    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.left.right.equalTo(weakSelf.view);
+//        make.height.mas_equalTo(100.f);
+//    }];
+//    ZLDropDownMenu *menu = [[ZLDropDownMenu alloc] init];
+//    [self.view addSubview:menu];
+//    menu.delegate = self;
+//    menu.dataSource = self;
+//    [menu mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(topView.mas_bottom);
+//        make.left.right.equalTo(weakSelf.view);
+//        make.height.mas_equalTo(50);
+//    }];
+    
 }
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.textLabel.text = @"1234";
+    return cell;
+}
+
+#pragma mark - ZLDropDownMenuDataSource
 
 - (NSInteger)numberOfColumnsInMenu:(ZLDropDownMenu *)menu
 {
@@ -73,7 +94,7 @@
     NSArray *array = self.subTitleArray[indexPath.column];
     return array[indexPath.row];
 }
-
+#pragma mark - ZLDropDownMenuDelegate
 - (void)menu:(ZLDropDownMenu *)menu didSelectRowAtIndexPath:(ZLIndexPath *)indexPath
 {
     NSArray *array = self.subTitleArray[indexPath.column];

@@ -169,10 +169,10 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
     WS(weakSelf);
     if (isShow) {
         if (1 == clickCount) {
-            [self.superview addSubview:backgroundView];
+            [[self keyWindow] addSubview:backgroundView];
             [_backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(weakSelf.mas_bottom);
-                make.left.right.bottom.equalTo(weakSelf.superview);
+                make.left.right.bottom.equalTo([weakSelf keyWindow]);
             }];
             [backgroundView layoutIfNeeded];
         }
@@ -209,10 +209,10 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
             
             if (1 == clickCount) {
                 self.coverLayerView.hidden = NO;
-                [self.superview addSubview:collectionView];
+                [[self keyWindow] addSubview:collectionView];
                 [self.collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(weakSelf.mas_bottom);
-                    make.left.right.equalTo(weakSelf.superview);
+                    make.left.right.equalTo([weakSelf keyWindow]);
                     make.height.mas_equalTo(height);
                 }];
                 
