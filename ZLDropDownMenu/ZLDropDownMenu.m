@@ -184,6 +184,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
         [UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
             backgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
         } completion:^(BOOL finished) {
+            
             [backgroundView removeFromSuperview];
             clickCount = 0;
         }];
