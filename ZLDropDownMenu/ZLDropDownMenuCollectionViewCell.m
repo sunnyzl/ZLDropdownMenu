@@ -35,6 +35,7 @@
     _label.layer.masksToBounds = YES;
     _label.textAlignment = NSTextAlignmentCenter;
     _label.font = [UIFont systemFontOfSize:dropDownMenuCollectionViewUIValue()->CELL_LABEL_FONT];
+    _label.adjustsFontSizeToFitWidth = YES;
     [self addSubview:_label];
     [_label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(weakSelf);

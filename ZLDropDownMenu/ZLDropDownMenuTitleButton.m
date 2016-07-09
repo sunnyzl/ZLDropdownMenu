@@ -53,6 +53,7 @@
     _mainTitleLabel = [[UILabel alloc] init];
     _mainTitleLabel.text = _mainTitle;
     _mainTitleLabel.font = [UIFont systemFontOfSize:dropDownMenuTitleButtonUIValue()->MAINTITLELABEL_FONT];
+    _mainTitleLabel.adjustsFontSizeToFitWidth = YES;
     _mainTitleLabel.textColor = kDropdownMenuTitleColor;
     [containerView addSubview:_mainTitleLabel];
     
@@ -89,7 +90,7 @@
         
         [_mainTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.centerX.equalTo(containerView);
-            make.width.mas_equalTo(mainTitleSize.width + 1);
+            make.width.mas_equalTo(mainTitleSize.width);
             make.height.mas_equalTo(mainTitleSize.height);
         }];
         
