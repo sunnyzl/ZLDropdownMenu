@@ -25,7 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    WS(weakSelf);
     _mainTitleArray = @[@"BOOKS", @"MOVIES", @"HOME", @"MUSIC"];
     _subTitleArray = @[
                        @[@"All", @"Arts", @"Photography", @"Biographies", @"Memoirs", @"Business", @"Calendars", @"Education", @"Comics", @"Computers", @"Transpotation", @"History"],
@@ -39,6 +38,8 @@
     menu.delegate = self;
     menu.dataSource = self;
     self.tableView.tableHeaderView = menu;
+    
+    
 //    UIView *topView = [[UIView alloc] init];
 //    topView.backgroundColor = [UIColor cyanColor];
 //    [self.view addSubview:topView];
