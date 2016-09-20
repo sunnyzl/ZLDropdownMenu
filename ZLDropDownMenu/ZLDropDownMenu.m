@@ -173,10 +173,15 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
     if (isShow) {
         if (1 == clickCount) {
             [self.window addSubview:backgroundView];
+            [backgroundView addSubview:self.collectionView];
             [_backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
                 CGRect rect = [weakSelf convertRect:weakSelf.bounds toView:weakSelf.window];
                 make.top.mas_equalTo(CGRectGetMaxY(rect));
                 make.left.right.bottom.equalTo(weakSelf.window);
+            }];
+            [self.collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.left.right.equalTo(weakSelf.backgroundView);
+                make.height.mas_equalTo(0.f);
             }];
             [backgroundView layoutIfNeeded];
         }
@@ -205,7 +210,6 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
     if (isShow) {
         CGFloat collectionViewHeight = 0.f;
         if (collectionView) {
-            CGFloat height = 0.f;
             NSInteger rowCount = (NSInteger)ceilf((CGFloat)[collectionView numberOfItemsInSection:0] / dropDownMenuCollectionViewUIValue()->VIEW_COLUMNCOUNT);
             collectionViewHeight = dropDownMenuCollectionViewUIValue()->VIEW_TOP_BOTTOM_MARGIN * 2 + dropDownMenuCollectionViewUIValue()->CELL_HEIGHT * rowCount + dropDownMenuCollectionViewUIValue()->LINESPACING * (rowCount - 1);
             CGFloat maxHeight = deviceHeight() - CGRectGetMaxY(self.frame);
@@ -213,15 +217,6 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
             
             if (1 == clickCount) {
                 self.coverLayerView.hidden = NO;
-                [self.window addSubview:collectionView];
-                [self.collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    CGRect rect = [weakSelf convertRect:weakSelf.bounds toView:weakSelf.window];
-                    make.top.mas_equalTo(CGRectGetMaxY(rect));
-                    make.left.right.equalTo(weakSelf.window);
-                    make.height.mas_equalTo(height);
-                }];
-                
-                [self.collectionView layoutIfNeeded];
                 [UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
                     [collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
                         make.height.mas_equalTo(collectionViewHeight);
