@@ -315,7 +315,6 @@ static NSInteger clickCount;
     ZLDropDownMenuTitleButton *titleButton = self.titleButtons[self.currentSelectedMenuIndex];
     [self animationWithTitleButton:titleButton BackgroundView:self.backgroundView collectionView:self.collectionView show:NO complete:^{
         weakSelf.show = NO;
-        
     }];
 }
 
