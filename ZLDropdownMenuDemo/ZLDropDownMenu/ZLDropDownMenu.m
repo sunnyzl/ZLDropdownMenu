@@ -33,7 +33,7 @@ typedef void(^ZLDropDownMenuAnimateCompleteHandler)(void);
 @interface ZLDropDownMenu () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, assign) NSInteger currentSelectedMenuIndex;
 @property (nonatomic, assign) NSInteger numOfMenu;
-@property (nonatomic, strong) UIView *backgroundView;
+@property (nonatomic, strong) UIButton *backgroundView;
 @property (nonatomic, strong) UIView *coverLayerView;
 @property (nonatomic, assign, getter=isShow) BOOL show;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -71,12 +71,14 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
         _collectionView.autoresizesSubviews = NO;
         self.autoresizesSubviews = NO;
         
-        _backgroundView = [[UIView alloc] init];
+//        _backgroundView = [[UIView alloc] init];
+        _backgroundView = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backgroundView.userInteractionEnabled = YES;
         _backgroundView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.f];
         _backgroundView.opaque = NO;
-        
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundViewDidTap:)];
-        [_backgroundView addGestureRecognizer:tapGesture];
+        [_backgroundView addTarget:self action:@selector(backgroundViewDidTap:) forControlEvents:UIControlEventTouchUpInside];
+//        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundViewDidTap:)];
+//        [_backgroundView addGestureRecognizer:tapGesture];
         _window = [self keyWindow];
     }
     return self;
@@ -224,6 +226,7 @@ static NSString * const collectionCellID = @"ZLDropDownMenuCollectionViewCell";
                     [collectionView.superview layoutIfNeeded];
                 }completion:^(BOOL finished) {
                     weakSelf.coverLayerView.hidden = YES;
+                    NSLog(@"%d", self.collectionView.isUserInteractionEnabled);
                 }];
             } else {
                 [UIView animateWithDuration:dropDownMenuUIValue()->ANIMATION_DURATION animations:^{
@@ -306,7 +309,7 @@ static NSInteger clickCount;
 
 
 
-- (void)backgroundViewDidTap:(UITapGestureRecognizer *)tapGesture
+- (void)backgroundViewDidTap:(UIButton *)tapGesture
 {
     WS(weakSelf);
     ZLDropDownMenuTitleButton *titleButton = self.titleButtons[self.currentSelectedMenuIndex];
