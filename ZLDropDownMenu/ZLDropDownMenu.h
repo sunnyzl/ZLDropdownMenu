@@ -10,6 +10,9 @@
 
 @interface ZLIndexPath : NSObject
 
+
+
+
 @property (nonatomic, assign) NSInteger column;
 @property (nonatomic, assign) NSInteger row;
 
